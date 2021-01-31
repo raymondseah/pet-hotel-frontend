@@ -63,7 +63,7 @@ class Login extends React.Component {
                         expires: moment.unix(response.data.expiresAt).toDate()
                     })
 
-                    this.props.history.push('/')
+                    this.props.history.push('/users/profile')
                 })
 
                 .catch(err => {

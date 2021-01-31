@@ -1,20 +1,52 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import qs from 'qs'
-import Axios from 'axios'
+import axios from 'axios'
+import jwt from 'jwt-decode'
 import './CreatePet.css'
-
+import { withCookies } from 'react-cookie'
+import { withRouter } from 'react-router-dom'
 class CreatePet extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            client_id:'',
+            first_name: '',
+            last_name: '',
+            email: '',
+            client_id: '',
             pet_name: '',
-            pet_type:'',
+            pet_type: '',
             pet_breed: '',
+            pet_profile_url:'',
             formMsg: [],
         }
+    }
+
+    componentDidMount() {
+        this.getCurrentUserId()
+    }
+
+    getCurrentUserId() {
+        const token = this.props.cookies.get('token')
+        const config = {
+            headers: {
+                auth_token: token
+            }
+        }
+        return axios
+            .get('http://localhost:5000/api/v1/users/profile', config)
+            .then((response) => {
+                this.setState({
+                    first_name: response.data.first_name,
+                    last_name: response.data.last_name,
+                    email: response.data.email,
+                    client_id: response.data.id,
+                })
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     handleChange(e, elemName) {
@@ -45,16 +77,18 @@ class CreatePet extends React.Component {
             formMsg: []
         })
 
-        Axios.post('http://localhost:5000/api/v1/pets/create', qs.stringify({
+        axios.post('http://localhost:5000/api/v1/pets/create', qs.stringify({
             pet_name: this.state.pet_name,
             pet_type: this.state.pet_type,
             pet_breed: this.state.pet_breed,
+            client_id: this.state.client_id,
         }))
             .then(response => {
-                console.log(response.data)
+                console.log(response)
                 this.setState({
                     pet_name: '',
                     pet_type: '',
+                    client_id: '',
                     pet_breed: '',
                 })
             })
@@ -72,11 +106,17 @@ class CreatePet extends React.Component {
                         <div className="image_outer_container">
                             <div className="green_icon"></div>
                             <div className="image_inner_container">
-                                <img src="https://thumbs.dreamstime.com/z/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg" alt="Profile" />
+                                <img src={this.state.pet_profile_url} alt="Profile" />
                             </div>
                         </div>
+
                     </div>
+
+                    <input accept="image/*" type='file' onChange={this.handleImageUpload} />
+                    <button onClick={e => { this.uploadImage(e) }}>Upload Image</button>
+                    <button onClick={e => { this.deleteImage(e) }}>Delete Image</button>
                 </div>
+
 
                 <form className="container" onSubmit={e => { this.handleFormSubmission(e) }}>
                     <div className="mb-3">
@@ -86,11 +126,11 @@ class CreatePet extends React.Component {
                     <div className="mb-3">
                         <label htmlFor="pet-type" className="form-label">Pet Type</label>
                         <select value={this.state.pet_type} onChange={e => { this.handleChange(e, 'pet_type') }} className="form-control" id="pet-type">
-                                    <option>---PLEASE SELECT---</option>
-                                    <option>Dog</option>
-                                    <option>Cat</option>
-                                    <option>Birds</option>
-                                </select>
+                            <option>---PLEASE SELECT---</option>
+                            <option>Dog</option>
+                            <option>Cat</option>
+                            <option>Birds</option>
+                        </select>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="pet-breed" className="form-label">Pet Breed</label>
@@ -109,4 +149,4 @@ class CreatePet extends React.Component {
     }
 }
 
-export default CreatePet;
+export default withRouter(withCookies(CreatePet))

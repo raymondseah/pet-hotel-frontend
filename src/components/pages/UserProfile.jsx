@@ -14,18 +14,16 @@ class UserProfile extends React.Component {
             last_name: '',
             email: '',
             user_id: '',
-            profile_pic_url: 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg',
-            image_selected:'',
-            set_image_selected:'',
+            profile_pic_url: '',
+            imageUrl: '',
+            imageAlt: '',
         }
     }
 
     componentDidMount() {
 
         this.getSingleUserProfile()
-        this.confirmUser();
-        this.confirmLogin();
-        // this.checkImageURL();
+        this.getSingleUserImage()
     }
 
     getSingleUserProfile() {
@@ -38,11 +36,11 @@ class UserProfile extends React.Component {
         return axios
             .get('http://localhost:5000/api/v1/users/profile', config)
             .then((response) => {
-                console.log(response)
                 this.setState({
                     first_name: response.data.first_name,
                     last_name: response.data.last_name,
                     email: response.data.email,
+                    user_id: response.data.id,
                 })
             })
             .catch((err) => {
@@ -51,42 +49,96 @@ class UserProfile extends React.Component {
 
     }
 
-    checkImageURL() {
-        if (this.state.profile_pic_url !== 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg') {
-            return false
-        }
-        return true;
-    }
-
-
-    confirmUser() {
-        // get token
-        const token = this.props.cookies.get("token");
-        try {
-            const decodedToken = jwt(token);
-            if (decodedToken.username === this.state.event.hosted_by) {
-                return true;
+    getSingleUserImage() {
+        const token = this.props.cookies.get('token')
+        const config = {
+            headers: {
+                auth_token: token
             }
-            return false;
-        } catch (e) {
-            return false;
         }
+        return axios
+            .get('http://localhost:5000/api/v1/users/profileimage', config)
+            .then((response) => {
+                console.log(response)
+                this.setState({
+                    profile_pic_url: response.data.profile_pic_url,
+                })
+            })
+            .catch((err) => {
+                console.log(err);
+                this.setState({
+                    profile_pic_url: 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg',
+                })
+            });
     }
 
-    confirmLogin() {
-        const token = this.props.cookies.get("token");
 
-        try {
-            const decodedToken = jwt(token);
-            if (!decodedToken) {
-                return false;
+    handleImageUpload = () => {
+        const { files } = document.querySelector('input[type="file"]');
+        const formData = new FormData();
+        formData.append("file", files[0]);
+        formData.append("upload_preset", "evwsdnzn");
+        axios.post("https://api.cloudinary.com/v1_1/dyrzeqduc/image/upload", formData)
+            .then((response) => {
+                console.log(response)
+                console.log('ok')
+                this.setState({
+                    imageUrl: response.data.secure_url,
+                    imageAlt: `An image of ${response.data.original_filename}`,
+                });
+            })
+            .catch((err) => console.log(err));
+    };
+
+    uploadImage(e) {
+        e.preventDefault()
+        const token = this.props.cookies.get('token')
+        const config = {
+            headers: {
+                auth_token: token
             }
-            return true;
-        } catch (e) {
-            return false;
         }
+        axios.post('http://localhost:5000/api/v1/users/profile/upload', qs.stringify({
+            imageUrl: this.state.imageUrl,
+            user_id: this.state.user_id,
+            email: this.state.email,
+        }), config)
+            .then(response => {
+                console.log("SENT")
+                this.setState({
+                    imageUrl: '',
+                })
+                this.props.history.push('/')
+                this.props.history.push('/users/profile')
+
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+
+
     }
 
+    deleteImage(e) {
+        e.preventDefault()
+        const token = this.props.cookies.get('token')
+        const config = {
+            headers: {
+                auth_token: token
+            }
+        }
+
+        axios.delete('http://localhost:5000/api/v1/users/profileimagedelete',config)
+            .then((response) => {
+                console.log(response);
+                this.props.history.push('/')
+                this.props.history.push('/users/profile')
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 
 
     handleFormSubmission(e) {
@@ -97,6 +149,8 @@ class UserProfile extends React.Component {
     }
 
     render() {
+
+
         return (
             <div id="page-userProfile" className="container">
                 <div className="container">
@@ -106,10 +160,13 @@ class UserProfile extends React.Component {
                             <div className="image_inner_container">
                                 <img src={this.state.profile_pic_url} alt="Profile" />
                             </div>
-                            <button href="/users/profile/imageupload"> Upload Profile Picture </button>
                         </div>
 
                     </div>
+
+                    <input accept="image/*" type='file' onChange={this.handleImageUpload} />
+                    <button onClick={e => { this.uploadImage(e) }}>Upload Image</button>
+                    <button onClick={e => { this.deleteImage(e) }}>Delete Image</button>
                 </div>
 
 

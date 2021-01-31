@@ -9,6 +9,7 @@ import CreatePet from './components/pages/CreatePet'
 import UserRegister from './components/pages/Register'
 import UserLogin from './components/pages/Login'
 import UserProfile from './components/pages/UserProfile'
+import UserImageUpload from './components/pages/UserProfileImageUpload'
 function App() {
 
   return (
@@ -17,7 +18,10 @@ function App() {
         <Switch>
           <Route path="/users/register" component={UserRegister}></Route>
           <Route path="/users/login" component={UserLogin}></Route>
+
+          <Route path="/users/profile/image/upload" component={UserImageUpload}></Route>
           <Route path="/users/profile" component={UserProfile}></Route>
+
 
           <Route path="/create/pet/:id/profile" component={UploadPetProfileImage}></Route>
           <Route path="/create/pet/" component={CreatePet}></Route>
