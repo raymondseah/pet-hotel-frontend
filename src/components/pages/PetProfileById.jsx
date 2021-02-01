@@ -6,7 +6,7 @@ import jwt from 'jwt-decode'
 import './CreatePet.css'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
-class CreatePet extends React.Component {
+class GetPetById extends React.Component {
 
     constructor(props) {
         super(props)
@@ -24,6 +24,8 @@ class CreatePet extends React.Component {
     }
 
     componentDidMount() {
+        const routeParams = this.props.match.params;
+        this.getCurrentPetId(routeParams.id)
         this.getCurrentUserId()
     }
 
@@ -49,25 +51,25 @@ class CreatePet extends React.Component {
             });
     }
 
-    handleChange(e, elemName) {
-        switch (elemName) {
-            case 'pet_name':
-                this.setState({
-                    pet_name: e.target.value
-                })
-                break;
-            case 'pet_type':
-                this.setState({
-                    pet_type: e.target.value
-                })
-                break;
-            case 'pet_breed':
-                this.setState({
-                    pet_breed: e.target.value
-                })
-                break;
-            default:
-        }
+    getCurrentPetId(id) {
+        console.log(id);
+        axios
+          .get(`http://localhost:5000/api/v1/pets/${id}`)
+          .then((response) => {
+              console.log(response.data.result)
+            this.setState({
+                pet_name:response.data.result.pet_name,
+                pet_type:response.data.result.pet_type,
+                pet_breed:response.data.result.pet_breed,
+
+
+            });
+
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
     }
 
     handleFormSubmission(e) {
@@ -116,27 +118,36 @@ class CreatePet extends React.Component {
                     <button onClick={e => { this.deleteImage(e) }}>Delete Image</button>
                 </div>
 
+                <div>
+                    <div className="row">
+                        <div className="col-sm-6 col-md-4">
+                            Pet Name :
+                    </div>
+                        <div className="col-sm-6 col-md-4">
+                            {this.state.pet_name}
+                        </div>
+                    </div>
 
-                <form className="container" onSubmit={e => { this.handleFormSubmission(e) }}>
-                    <div className="mb-3">
-                        <label htmlFor="pet-name" className="form-label">Pet Name</label>
-                        <input type="text" value={this.state.pet_name} onChange={e => { this.handleChange(e, 'pet_name') }} className="form-control" id="pet-name" />
+                    <div className="row">
+                        <div className="col-sm-6 col-md-4">
+                            Pet Type :
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="pet-type" className="form-label">Pet Type</label>
-                        <select value={this.state.pet_type} onChange={e => { this.handleChange(e, 'pet_type') }} className="form-control" id="pet-type">
-                            <option>---PLEASE SELECT---</option>
-                            <option>Dog</option>
-                            <option>Cat</option>
-                            <option>Birds</option>
-                        </select>
+                        <div className="col-sm-6 col-md-4">
+                            {this.state.pet_type}
+                        </div>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="pet-breed" className="form-label">Pet Breed</label>
-                        <input type="text" value={this.state.pet_breed} onChange={e => { this.handleChange(e, 'pet_breed') }} className="form-control" id="pet-breed" />
+
+                    <div className="row">
+                        <div className="col-sm-6 col-md-4">
+                            Pet Breed :
                     </div>
-                    <button type="submit" className="btn btn-primary">Add Pet</button>
-                </form>
+                        <div className="col-sm-6 col-md-4">
+                            {this.state.pet_breed}
+                        </div>
+                    </div>
+                </div>
+                <input className="btn btn-lg btn-success btn-block" type="submit" value="Edit Profile" />
+
 
 
 
@@ -148,4 +159,4 @@ class CreatePet extends React.Component {
     }
 }
 
-export default withRouter(withCookies(CreatePet))
+export default withRouter(withCookies(GetPetById))
