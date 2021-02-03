@@ -11,6 +11,7 @@ class GetPetById extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            pet_id:'',
             first_name: '',
             last_name: '',
             email: '',
@@ -19,6 +20,8 @@ class GetPetById extends React.Component {
             pet_type: '',
             pet_breed: '',
             pet_profile_url:'',
+            imageUrl: '',
+            imageAlt: '',
             formMsg: [],
         }
     }
@@ -26,6 +29,7 @@ class GetPetById extends React.Component {
     componentDidMount() {
         const routeParams = this.props.match.params;
         this.getCurrentPetId(routeParams.id)
+        this.getPetImageById(routeParams.id)
         this.getCurrentUserId()
     }
 
@@ -58,6 +62,7 @@ class GetPetById extends React.Component {
           .then((response) => {
               console.log(response.data.result)
             this.setState({
+                pet_id:response.data.result.id,
                 pet_name:response.data.result.pet_name,
                 pet_type:response.data.result.pet_type,
                 pet_breed:response.data.result.pet_breed,
@@ -70,6 +75,24 @@ class GetPetById extends React.Component {
             console.log(err);
           });
 
+    }
+
+    getPetImageById(id) {
+
+        return axios
+            .get(`http://localhost:5000/api/v1/pet/${id}/profileimage`)
+            .then((response) => {
+                console.log(response)
+                this.setState({
+                    pet_profile_url: response.data.profile_pic_url,
+                })
+            })
+            .catch((err) => {
+                console.log(err);
+                this.setState({
+                    pet_profile_url: 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg',
+                })
+            });
     }
 
     handleFormSubmission(e) {
@@ -98,6 +121,69 @@ class GetPetById extends React.Component {
             })
 
     }
+
+    uploadPetImage(e) {
+        e.preventDefault()
+        const routeParams = this.props.match.params
+        const id = routeParams.id
+
+        axios.post(`http://localhost:5000/api/v1/pet/${id}/profile/upload`, qs.stringify({
+            pet_profile_url: this.state.imageUrl,
+            user_id: this.state.client_id,
+            email: this.state.email,
+            pet_id:this.state.pet_id
+        }))
+            .then(response => {
+                console.log("SENT")
+                this.setState({
+                    imageUrl: '',
+                })
+                this.props.history.push('/')
+                this.props.history.push(`/pet/${id}`)
+
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+
+
+    }
+
+    deletePetImage(e) {
+        e.preventDefault()
+        const routeParams = this.props.match.params
+        const id = routeParams.id
+
+        axios.delete(`http://localhost:5000/api/v1/pet/${id}/profile/delete`)
+            .then((response) => {
+                console.log(response);
+                this.props.history.push('/')
+                this.props.history.push(`/pet/${id}`)
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+    handleImageUpload = () => {
+        const { files } = document.querySelector('input[type="file"]');
+        const formData = new FormData();
+        formData.append("file", files[0]);
+        formData.append("upload_preset", "evwsdnzn");
+        axios.post("https://api.cloudinary.com/v1_1/dyrzeqduc/image/upload", formData)
+            .then((response) => {
+                console.log(response)
+                console.log('ok')
+                this.setState({
+                    imageUrl: response.data.secure_url,
+                    imageAlt: `An image of ${response.data.original_filename}`,
+                });
+            })
+            .catch((err) => console.log(err));
+    };
+
+
     render() {
         return (
             <div className="container">
@@ -107,15 +193,15 @@ class GetPetById extends React.Component {
                         <div className="image_outer_container">
                             <div className="green_icon"></div>
                             <div className="image_inner_container">
-                                <img src="https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg" alt="Profile" />
+                                <img src={this.state.pet_profile_url} alt="Profile" />
                             </div>
                         </div>
 
                     </div>
 
                     <input accept="image/*" type='file' onChange={this.handleImageUpload} />
-                    <button onClick={e => { this.uploadImage(e) }}>Upload Image</button>
-                    <button onClick={e => { this.deleteImage(e) }}>Delete Image</button>
+                    <button onClick={e => { this.uploadPetImage(e) }}>Upload Image</button>
+                    <button onClick={e => { this.deletePetImage(e) }}>Delete Image</button>
                 </div>
 
                 <div>
