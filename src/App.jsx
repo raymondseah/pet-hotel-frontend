@@ -11,6 +11,7 @@ import UserLogin from './components/pages/Login'
 import UserProfile from './components/pages/UserProfile'
 import UserImageUpload from './components/pages/UserProfileImageUpload'
 import PetProfileById from './components/pages/PetProfileById'
+import CreateBookingPage from './components/pages/CreateBooking'
 
 function App() {
 
@@ -23,6 +24,8 @@ function App() {
 
           <Route path="/users/profile/image/upload" component={UserImageUpload}></Route>
           <Route path="/users/profile" component={UserProfile}></Route>
+
+          <Route path="/booking/create" component={CreateBookingPage}></Route>
 
           <Route path="/pet/:id" component={PetProfileById}></Route>
           <Route path="/create/pet/:id/profile" component={UploadPetProfileImage}></Route>

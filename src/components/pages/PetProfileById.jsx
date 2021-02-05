@@ -11,6 +11,7 @@ class GetPetById extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            //create state to help control the loading of image
             pet_id:'',
             first_name: '',
             last_name: '',
