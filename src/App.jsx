@@ -12,15 +12,24 @@ import UserProfile from './components/pages/UserProfile'
 import UserImageUpload from './components/pages/UserProfileImageUpload'
 import PetProfileById from './components/pages/PetProfileById'
 import CreateBookingPage from './components/pages/CreateBooking'
+import Home from './components/pages/Home'
+import SiteHeader from './components/SiteHeader'
+import SideBar from './components/SideBar'
+import SiteFooter from './components/SiteFooter';
+
 
 function App() {
 
   return (
     <div className="App">
       <Router>
+        <SiteHeader/>
+        {/* <SideBar /> */}
         <Switch>
           <Route path="/users/register" component={UserRegister}></Route>
           <Route path="/users/login" component={UserLogin}></Route>
+
+
 
           <Route path="/users/profile/image/upload" component={UserImageUpload}></Route>
           <Route path="/users/profile" component={UserProfile}></Route>
@@ -31,8 +40,9 @@ function App() {
           <Route path="/create/pet/:id/profile" component={UploadPetProfileImage}></Route>
           <Route path="/create/pet/" component={CreatePet}></Route>
 
-
+          <Route path="/" component={Home}></Route>
         </Switch>
+        <SiteFooter/>
       </Router>
     </div>
   );

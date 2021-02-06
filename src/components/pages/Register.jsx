@@ -120,8 +120,8 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div id="page-register" className="container">
-                <div className="row">
+            <div id="page-register" >
+                <div className="row container">
                     <div className="">
                         <form onSubmit={e => { this.handleFormSubmission(e) }}>
                             <h2>Please Sign Up <small>It's free and always will be.</small></h2>
@@ -151,31 +151,32 @@ class Login extends React.Component {
                             <hr className="colorgraph" />
 
                             {
-                                            this.state.formErr.length > 0 ?
-                                                (
-                                                    <div className="form-group">
-                                                        {
-                                                            this.state.formErr.map(msg => {
-                                                                return (
-                                                                    <p>{msg}</p>
-                                                                )
-                                                            })
-                                                        }
-                                                    </div>
-                                                ) :
-                                                ''
-                                        }
-                                        {
-                                            this.state.formMsg !== '' ? (
-                                                <div className="form-group">
-                                                    <p>{this.state.formMsg}</p>
-                                                </div>
-                                            ) :
-                                                ''
-                                        }
+                                this.state.formErr.length > 0 ?
+                                    (
+                                        <div className="form-group">
+                                            {
+                                                this.state.formErr.map(msg => {
+                                                    return (
+                                                        <p>{msg}</p>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    ) :
+                                    ''
+                            }
+                            {
+                                this.state.formMsg !== '' ? (
+                                    <div className="form-group">
+                                        <p>{this.state.formMsg}</p>
+                                    </div>
+                                ) :
+                                    ''
+                            }
                             <div className="row">
-                                <div className="col-xs-12 col-md-6"><input type="submit" value="Register" className="btn btn-primary btn-block btn-lg" tabIndex="6" /></div>
                                 <div className="col-xs-12 col-md-6"><a href="/users/login" className="btn btn-success btn-block btn-lg">Sign In</a></div>
+                                <div className="col-xs-12 col-md-6"><input type="submit" value="Register" className="btn btn-primary btn-block btn-lg" tabIndex="6" /></div>
+
                             </div>
                         </form>
                     </div>

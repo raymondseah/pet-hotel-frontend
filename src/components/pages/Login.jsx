@@ -101,30 +101,33 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div id="page-login" className="container">
+            <div id="page-login">
 
-                <div className="row">
-                    <div className="col-md-4 col-md-offset-4">
-                        <div className="panel panel-default">
-                            <div className="panel-heading">
-                                <h3 className="panel-title">Login via site</h3>
+                <div className="row container">
+                    <form onSubmit={e => { this.handleFormSubmission(e) }}>
+                        <fieldset>
+                            <h2>Already have an account? Please Login</h2>
+                            <hr className="colorgraph" />
+                            <div className="form-group">
+                                <input className="form-control" type="email" onChange={e => { this.handleEmailChange(e) }} name="email" value={this.state.email} placeholder="Email Address" />
                             </div>
-                            <div className="panel-body">
-                                <form onSubmit={ e => { this.handleFormSubmission(e) } }>
-                                    <fieldset>
-                                        <div className="form-group">
-                                            <input className="form-control" onChange={ e => { this.handleEmailChange(e) } }  placeholder="yourmail@example.com" name="email" type="text" value={this.state.email}/>
-                                        </div>
-                                        <div className="form-group">
-                                            <input className="form-control" onChange={ e => { this.handlePasswordChange(e) } } placeholder="Password" name="password" type="password" value={this.state.password} />
-                                        </div>
+                            <div className="form-group">
+                                <input className="form-control" type="password" onChange={e => { this.handlePasswordChange(e) }}  name="password"  value={this.state.password}  placeholder="Password" />
+                            </div>
+                            <hr className="colorgraph" />
+                            <div className="row">
+                                <div className="col-xs-6 col-sm-6 col-md-6">
+                                    <input type="submit" className="btn btn-lg btn-success btn-block" value="Sign In" />
+                                </div>
+                                <div className="col-xs-6 col-sm-6 col-md-6">
+                                    <a href="/users/register" className="btn btn-lg btn-primary btn-block">Register</a>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
 
-                                        <input className="btn btn-lg btn-success btn-block" type="submit" value="Login" />
-                                    </fieldset>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+
+
                 </div>
 
             </div>
