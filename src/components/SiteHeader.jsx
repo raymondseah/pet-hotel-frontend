@@ -69,7 +69,7 @@ class SiteHeader extends Component {
                 <div id="mySidebar" className="sidebar">
                     <a href="#" className="closebtn" onClick={this.closeNav}>×</a>
                     <a href="/show/allpet">See All Pets</a>
-                    <a href="#">Services</a>
+                    <a href="/booking/create">Create Booking</a>
                     <a href="#">Clients</a>
                     <a href="#">Contact</a>
                     <a href="/users/profile">User Profile</a>
