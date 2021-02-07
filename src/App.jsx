@@ -16,7 +16,7 @@ import Home from './components/pages/Home'
 import SiteHeader from './components/SiteHeader'
 import SideBar from './components/SideBar'
 import SiteFooter from './components/SiteFooter';
-
+import ShowAllPetByUser from './components/pages/ShowAllPetByUser'
 
 function App() {
 
@@ -37,7 +37,7 @@ function App() {
           <Route path="/booking/create" component={CreateBookingPage}></Route>
 
           <Route path="/pet/:id" component={PetProfileById}></Route>
-          <Route path="/create/pet/:id/profile" component={UploadPetProfileImage}></Route>
+          <Route path="/show/allpet" component={ShowAllPetByUser}></Route>
           <Route path="/create/pet/" component={CreatePet}></Route>
 
           <Route path="/" component={Home}></Route>

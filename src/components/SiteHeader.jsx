@@ -36,7 +36,7 @@ class SiteHeader extends Component {
 
                         <div id="main">
                             <IconButton onClick={this.openNav}>
-                                <AssignmentIcon class="openbtn"/><div>☰Dashboard</div>
+                                <AssignmentIcon className="openbtn"/><div>☰Dashboard</div>
                             </IconButton>
                         </div>
 
@@ -66,9 +66,9 @@ class SiteHeader extends Component {
 
                 </nav>
 
-                <div id="mySidebar" class="sidebar">
-                    <a href="#" class="closebtn" onClick={this.closeNav}>×</a>
-                    <a href="#">About</a>
+                <div id="mySidebar" className="sidebar">
+                    <a href="#" className="closebtn" onClick={this.closeNav}>×</a>
+                    <a href="/show/allpet">See All Pets</a>
                     <a href="#">Services</a>
                     <a href="#">Clients</a>
                     <a href="#">Contact</a>

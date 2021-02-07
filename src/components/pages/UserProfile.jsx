@@ -5,7 +5,7 @@ import qs from 'qs'
 import jwt from 'jwt-decode'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
-
+import './UserProfile.css'
 class UserProfile extends React.Component {
     constructor(props) {
         super(props)
@@ -129,7 +129,7 @@ class UserProfile extends React.Component {
             }
         }
 
-        axios.delete('http://localhost:5000/api/v1/users/profileimagedelete',config)
+        axios.delete('http://localhost:5000/api/v1/users/profileimagedelete', config)
             .then((response) => {
                 console.log(response);
                 this.props.history.push('/')
@@ -152,53 +152,24 @@ class UserProfile extends React.Component {
 
 
         return (
-            <div id="page-userProfile" className="container">
-                <div className="container">
-                    <div className="d-flex justify-content-center h-100">
-                        <div className="image_outer_container">
-                            <div className="green_icon"></div>
-                            <div className="image_inner_container">
-                                <img src={this.state.profile_pic_url} alt="Profile" />
-                            </div>
-                        </div>
+            <div id="page-userProfile">
 
+            
+                <div class="">
+                    <hr />
+                    <div class="profile-card-6"><img src={this.state.profile_pic_url} class="img img-responsive" alt="Profile Pic" />
+                        <div class="profile-name">{this.state.first_name}
+                            <br />{this.state.last_name}
+                            <br />{this.state.email}</div>
                     </div>
-
                     <input accept="image/*" type='file' onChange={this.handleImageUpload} />
                     <button onClick={e => { this.uploadImage(e) }}>Upload Image</button>
                     <button onClick={e => { this.deleteImage(e) }}>Delete Image</button>
+                    <input className="btn btn-lg btn-success btn-block" type="submit" value="Edit Profile" />
                 </div>
 
 
-                <div>
-                    <div className="row">
-                        <div className="col-sm-6 col-md-4">
-                            First Name :
-                    </div>
-                        <div className="col-sm-6 col-md-4">
-                            {this.state.first_name}
-                        </div>
-                    </div>
 
-                    <div className="row">
-                        <div className="col-sm-6 col-md-4">
-                            Last Name :
-                    </div>
-                        <div className="col-sm-6 col-md-4">
-                            {this.state.last_name}
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-sm-6 col-md-4">
-                            Email :
-                    </div>
-                        <div className="col-sm-6 col-md-4">
-                            {this.state.email}
-                        </div>
-                    </div>
-                </div>
-                <input className="btn btn-lg btn-success btn-block" type="submit" value="Edit Profile" />
 
 
             </div>
