@@ -108,9 +108,6 @@ class CreateBooking extends Component {
     handleFormSubmission(e) {
         e.preventDefault() // prevent submit to another page
 
-        this.setState({
-            formMsg: []
-        })
 
         axios.post('http://localhost:5000/api/v1/bookings/create', qs.stringify({
             user_email: this.state.user_email,
@@ -133,7 +130,6 @@ class CreateBooking extends Component {
                     fee: '',
                     arrival_date: '',
                     departure_date: '',
-
                 })
             })
             .catch(error => {
@@ -165,9 +161,12 @@ class CreateBooking extends Component {
                 var diff = end.diff(start, 'days') 
 
                 console.log(diff)
+                
+                var feeTotal = (diff*20)
 
                 this.setState({
-                    duration:diff
+                    duration:diff,
+                    fee:feeTotal
                 })
 
             } else {
