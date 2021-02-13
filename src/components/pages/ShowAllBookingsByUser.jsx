@@ -31,7 +31,7 @@ class ShowAllBookingsByUser extends Component {
                     renderCell: (params) => (
                         <strong>
                             <Link to={{
-                                pathname: `/booking/${params.value}`,
+                                pathname: `/userbooking/${params.value}`,
                             }}><p className="host-by text-1xl font-medium text-indigo-500" >Click to see booking details</p>
                             </Link>
                         </strong>

@@ -6,31 +6,33 @@ import jwt from 'jwt-decode'
 import './CreatePet.css'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
+import './BookingProfileById.css'
 class GetBookingById extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
             //create state to help control the loading of image
-            pet_id:'',
+            pet_id: '',
             first_name: '',
             last_name: '',
             email: '',
             client_id: '',
             pet_name: '',
-            pet_type: '',
-            pet_breed: '',
-            pet_profile_url:'',
-            imageUrl: '',
-            imageAlt: '',
+            arrival_date: '',
+            departure_date: '',
+            employee_notes: '',
+            client_notes: '',
+            status: '',
+            fee: '',
             formMsg: [],
         }
     }
 
     componentDidMount() {
         const routeParams = this.props.match.params;
-        this.getCurrentPetId(routeParams.id)
-        this.getPetImageById(routeParams.id)
+        console.log(routeParams)
+        this.getCurrentBookingId(routeParams.id)
         this.getCurrentUserId()
     }
 
@@ -56,46 +58,47 @@ class GetBookingById extends React.Component {
             });
     }
 
-    getCurrentPetId(id) {
+    getCurrentBookingId(id) {
         console.log(id);
         axios
-          .get(`http://localhost:5000/api/v1/pets/${id}`)
-          .then((response) => {
-              console.log(response.data.result)
-            this.setState({
-                pet_id:response.data.result.id,
-                pet_name:response.data.result.pet_name,
-                pet_type:response.data.result.pet_type,
-                pet_breed:response.data.result.pet_breed,
-
-
-            });
-
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-
-    }
-
-    getPetImageById(id) {
-
-        return axios
-            .get(`http://localhost:5000/api/v1/pet/${id}/profileimage`)
+            .get(`http://localhost:5000/api/v1/bookings/${id}`)
             .then((response) => {
-                console.log(response)
+                console.log(response.data.result)
+                console.log(response.data.result.client_notes)
                 this.setState({
-                    pet_profile_url: response.data.profile_pic_url,
-                })
+                    pet_id: response.data.result.id,
+                    pet_name: response.data.result.pet_name,
+                    arrival_date: response.data.result.arrival_date,
+                    departure_date: response.data.result.departure_date,
+                    client_notes: response.data.result.client_notes,
+                    fee: response.data.result.fee,
+                    status: response.data.result.status,
+                    employee_notes: response.data.result.employee_notes
+                });
+
             })
             .catch((err) => {
                 console.log(err);
-                this.setState({
-                    pet_profile_url: 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg',
-                })
             });
+
     }
 
+    handleDelete(e) {
+        e.preventDefault()
+        const routeParams = this.props.match.params;
+        const id = routeParams.id
+        axios
+            .delete(`http://localhost:5000/api/v1/bookings/${id}`)
+            .then((response) => {
+                console.log(response)
+                this.props.history.push('/users/allbookings')
+            })
+            // this.props.history.push('/users/allbookings')
+            .catch((err) => {
+                console.log(err);
+            });
+
+    }
     handleFormSubmission(e) {
         e.preventDefault() // prevent submit to another page
 
@@ -108,7 +111,7 @@ class GetBookingById extends React.Component {
             pet_type: this.state.pet_type,
             pet_breed: this.state.pet_breed,
             client_id: this.state.client_id,
-            email:this.state.email
+            email: this.state.email
         }))
             .then(response => {
                 this.setState({
@@ -129,8 +132,35 @@ class GetBookingById extends React.Component {
 
     render() {
         return (
-           <div>
-
+            <div id="booking-by-id-page">
+                <form className="container">
+                    <div className="row">
+                        <div className="col-4">Pet Name : </div>
+                        <div className="col-8" id="pet-name" >{this.state.pet_name}</div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4">Arrival Date & Time : </div>
+                        <div className="col-8" id="arrival-date" >{this.state.arrival_date}</div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4">Departure Date & Time : </div>
+                        <div className="col-8" id="departure-date" >{this.state.departure_date}</div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4">Client Notes :</div>
+                        <textarea className="col-8" row="3" id="client-notes" placeholder={this.state.client_notes}></textarea>
+                    </div>
+                    <div className="row">
+                        <div className="col-4">Booking Status :</div>
+                        <div className="col-8" id="booking-status" >{this.state.status}</div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4">Fees :</div>
+                        <div className="col-8" id="fee" >{this.state.fee}</div>
+                    </div>
+                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="delete" className="btn btn-danger" onClick={e => { this.handleDelete(e) }}>Delete</button>
+                </form>
             </div>
         )
     }
