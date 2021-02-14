@@ -6,6 +6,8 @@ import jwt from 'jwt-decode'
 import './CreatePet.css'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import './BookingProfileById.css'
 class GetBookingById extends React.Component {
 
@@ -24,8 +26,10 @@ class GetBookingById extends React.Component {
             employee_notes: '',
             client_notes: '',
             status: '',
+            next_status: '',
             fee: '',
             formMsg: [],
+            status_choices: ["awaiting confirmation", "awaiting arrival", "arrived", "departed", "booking cancelled"]
         }
     }
 
@@ -99,33 +103,42 @@ class GetBookingById extends React.Component {
             });
 
     }
-    handleFormSubmission(e) {
-        e.preventDefault() // prevent submit to another page
 
-        this.setState({
-            formMsg: []
-        })
 
-        axios.post('http://localhost:5000/api/v1/pets/create', qs.stringify({
-            pet_name: this.state.pet_name,
-            pet_type: this.state.pet_type,
-            pet_breed: this.state.pet_breed,
-            client_id: this.state.client_id,
-            email: this.state.email
+
+
+    handleStatusChange(e) {
+        e.preventDefault();
+
+        const routeParams = this.props.match.params;
+        const id = routeParams.id;
+        console.log(id)
+        axios.patch(`http://localhost:5000/api/v1/bookings/${id}/update`, qs.stringify({
+            next_status: this.state.next_status
         }))
             .then(response => {
-                this.setState({
-                    pet_name: '',
-                    pet_type: '',
-                    pet_breed: '',
-                })
+                console.log(response)
+
+
+                console.log('ok')
             })
-            .catch(error => {
-                console.log(error)
+            .catch(err => {
+                console.log(err)
             })
+
+            window.location.reload(); 
 
     }
 
+    onStatusChange = (event, values) => {
+        this.setState({
+            next_status: values
+        }, () => {
+            // This will output an array of objects
+            // given by Autocompelte options property.
+            console.log(this.state.next_status);
+        });
+    }
 
 
 
@@ -133,6 +146,8 @@ class GetBookingById extends React.Component {
     render() {
         return (
             <div id="booking-by-id-page">
+
+
                 <form className="container">
                     <div className="row">
                         <div className="col-4">Pet Name : </div>
@@ -151,14 +166,23 @@ class GetBookingById extends React.Component {
                         <textarea className="col-8" row="3" id="client-notes" placeholder={this.state.client_notes}></textarea>
                     </div>
                     <div className="row">
-                        <div className="col-4">Booking Status :</div>
-                        <div className="col-8" id="booking-status" >{this.state.status}</div>
+                        <div className="col-3">Booking Status :</div>
+                        <div className="col-3">{this.state.status}</div>
+                        <div className="col-3">
+                            <Autocomplete
+                                id="pet-name"
+                                options={this.state.status_choices}
+                                getOptionLabel={(status_choices) => status_choices}
+                                onChange={this.onStatusChange}
+                                renderInput={(params) => <TextField {...params} label="update booking status" variant="outlined" />}
+                            /></div>
+                        <button className="col-3 btn btn-primary" onClick={e => { this.handleStatusChange(e) }}>Update Status</button>
                     </div>
                     <div className="row">
                         <div className="col-4">Fees :</div>
                         <div className="col-8" id="fee" >{this.state.fee}</div>
                     </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <a type="edit" className="btn btn-primary" href="/">Edit</a>
                     <button type="delete" className="btn btn-danger" onClick={e => { this.handleDelete(e) }}>Delete</button>
                 </form>
             </div>

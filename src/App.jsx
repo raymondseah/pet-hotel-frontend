@@ -19,6 +19,7 @@ import SiteFooter from './components/SiteFooter';
 import ShowAllPetByUser from './components/pages/ShowAllPetByUser'
 import ShowAllBookingByUser from './components/pages/ShowAllBookingsByUser'
 import ShowBookingById from './components/pages/BookingProfileById'
+import adminShowAllBooking from './components/pages/ShowEveryBookings'
 
 function App() {
 
@@ -41,6 +42,10 @@ function App() {
           <Route path="/users/allpet" component={ShowAllPetByUser}></Route>
           <Route path="/pet/:id" component={PetProfileById}></Route>
           <Route path="/create/pet/" component={CreatePet}></Route>
+
+
+
+          <Route path="/admin/allbookings" component={adminShowAllBooking}></Route>
 
           <Route path="/" component={Home}></Route>
         </Switch>

@@ -74,7 +74,9 @@ class SiteHeader extends Component {
                     <br />
                     <a href="/users/createbooking">Create Booking</a>
                     <br />
-                    <a href="/users/allbookings">See all Bookings</a>
+                    <a href="/users/allbookings">See own Bookings</a>
+                    <br />
+                    <a href="/admin/allbookings">See all Bookings</a>
                     <br />
                     <a href="/users/profile">User Profile</a>
                 </div>
