@@ -184,6 +184,11 @@ class GetBookingById extends React.Component {
                     </div>
                     <a type="edit" className="btn btn-primary" href="/">Edit</a>
                     <button type="delete" className="btn btn-danger" onClick={e => { this.handleDelete(e) }}>Delete</button>
+                    <div className="row">
+                        <div className="col-4">Employee Notes :</div>
+                        <textarea className="col-4" row="3" id="employee-notes" placeholder={this.state.client_notes}></textarea>
+                        <button className="col-4 btn btn-primary" onClick={e => { this.handleStatusChange(e) }}>Submit Employee Notes</button>
+                    </div>
                 </form>
             </div>
         )

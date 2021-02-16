@@ -32,6 +32,7 @@ class CreateBooking extends Component {
     componentDidMount() {
 
         this.getCurrentUserId()
+
     }
 
     getCurrentUserId() {
@@ -148,31 +149,62 @@ class CreateBooking extends Component {
         });
     }
 
+    handleArrivalDateChange(e) {
+        e.preventDefault()
+        this.setState({
+            arrival_date: e.target.value
+        })
+        let start = this.state.arrival_date
+        console.log(start)
+        this.calculateFee()
+    }
+
+    handleDepartureDateChange(e) {
+        e.preventDefault()
+        this.setState({
+            departure_date: e.target.value
+        })
+        console.log(this.state.departure_date)
+
+        this.calculateFee()
+
+    }
 
 
     calculateFee() {
-        console.log('clicked')
-        if (this.state.arrival_date !== '') {
-            if (this.state.departure_date !== '') {
-                console.log(true)
+        // console.log(this.state.arrival_date)
+        // console.log(this.state.departure_date)
+        var start = moment(this.state.arrival_date);
+        console.log(start)
 
-                var start = moment(this.state.arrival_date);
-                var end = moment(this.state.departure_date);
-                var diff = end.diff(start, 'days') 
+        var end = moment(this.state.departure_date);
 
+        console.log(end)
+
+
+        if (this.state.arrival_date || this.state.departure_date !== '') {
+
+
+            console.log(true)
+
+            try {
+                var diff = end.diff(start, 'days')
                 console.log(diff)
-                
-                var feeTotal = (diff*20)
+
+                var feeTotal = (diff * 20)
 
                 this.setState({
-                    duration:diff,
-                    fee:feeTotal
+                    duration: diff,
+                    fee: feeTotal
                 })
 
-            } else {
-                console.log(false)
             }
-            return
+            catch (err) {
+                console.log(err)
+
+            }
+
+
         } else {
             console.log(false)
         }
@@ -206,12 +238,12 @@ class CreateBooking extends Component {
                     <div className="row">
                         <div className="col-xs-12 col-sm-6 col-md-5">
                             <div className="form-group">
-                                <input type="datetime-local" name="arrival_date" id="arrival_date" value={this.state.arrival_date} onChange={e => { this.handleChange(e, 'arrival_date'); this.calculateFee() }} className="form-control input-lg" />
+                                <input type="datetime-local" name="arrival_date" id="arrival_date" value={this.state.arrival_date} onChange={e => { this.handleArrivalDateChange(e) }} className="form-control input-lg" />
                             </div>
                         </div>
                         <div className="col-xs-12 col-sm-6 col-md-5">
                             <div className="form-group">
-                                <input type="datetime-local" name="departure_date" id="departure_date" value={this.state.departure_date} onChange={e => { this.handleChange(e, 'departure_date'); this.calculateFee() }} className="form-control input-lg" />
+                                <input type="datetime-local" name="departure_date" id="departure_date" value={this.state.departure_date} onChange={e => { this.handleDepartureDateChange(e) }} className="form-control input-lg" />
                             </div>
                         </div>
                         <div className="col-xs-12 col-sm-6 col-md-2">

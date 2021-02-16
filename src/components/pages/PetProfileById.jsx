@@ -6,6 +6,8 @@ import jwt from 'jwt-decode'
 import './CreatePet.css'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
+import './PetProfileById.css'
+
 class GetPetById extends React.Component {
 
     constructor(props) {
@@ -187,54 +189,65 @@ class GetPetById extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <div id="pet-profile-page">
+                                <div class="container">
+                    <div class="main-body">
 
-                <div className="container">
-                    <div className="d-flex justify-content-center h-100">
-                        <div className="image_outer_container">
-                            <div className="green_icon"></div>
-                            <div className="image_inner_container">
-                                <img src={this.state.pet_profile_url} alt="Profile" />
+
+                        <div class="row gutters-sm">
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column align-items-center text-center">
+                                            <img src={this.state.pet_profile_url} alt="profile-pic" class="rounded-circle" width="300" height="300" />
+                                            <input accept="image/*" type='file' onChange={this.handleImageUpload} />
+                                            <button onClick={e => { this.uploadPetImage(e) }}>Upload Image</button>
+                                            <button onClick={e => { this.deletePetImage(e) }}>Delete Image</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Pet Name :</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                            {this.state.pet_name}
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Pet Type :</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                            {this.state.pet_type}
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Breed :</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                            {this.state.pet_breed}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input className="btn btn-lg btn-success btn-block" type="submit" value="Edit Profile" />
+                                    <input className="btn btn-lg btn-success btn-danger" type="submit" value="Delete Profile" />
+                                </div>
+
                             </div>
                         </div>
-
-                    </div>
-
-                    <input accept="image/*" type='file' onChange={this.handleImageUpload} />
-                    <button onClick={e => { this.uploadPetImage(e) }}>Upload Image</button>
-                    <button onClick={e => { this.deletePetImage(e) }}>Delete Image</button>
-                </div>
-
-                <div>
-                    <div className="row">
-                        <div className="col-sm-6 col-md-4">
-                            Pet Name :
-                    </div>
-                        <div className="col-sm-6 col-md-4">
-                            {this.state.pet_name}
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-sm-6 col-md-4">
-                            Pet Type :
-                    </div>
-                        <div className="col-sm-6 col-md-4">
-                            {this.state.pet_type}
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-sm-6 col-md-4">
-                            Pet Breed :
-                    </div>
-                        <div className="col-sm-6 col-md-4">
-                            {this.state.pet_breed}
-                        </div>
                     </div>
                 </div>
-                <input className="btn btn-lg btn-success btn-block" type="submit" value="Edit Profile" />
 
+               
 
 
 

@@ -153,20 +153,73 @@ class UserProfile extends React.Component {
 
         return (
             <div id="page-userProfile">
+                <div class="container">
+                    <div class="main-body">
 
-            
-                <div class="">
+
+                        <div class="row gutters-sm">
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column align-items-center text-center">
+                                            <img src={this.state.profile_pic_url} alt="profile-pic" class="rounded-circle" width="300" height="300" />
+                                            <input accept="image/*" type='file' onChange={this.handleImageUpload} />
+                                            <button onClick={e => { this.uploadImage(e) }}>Upload Image</button>
+                                            <button onClick={e => { this.deleteImage(e) }}>Delete Image</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">First Name</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                {this.state.first_name}
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Last Name</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                {this.state.last_name}
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Email</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                {this.state.email}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input className="btn btn-lg btn-success btn-block" type="submit" value="Edit Profile" />
+                                    <input className="btn btn-lg btn-success btn-danger" type="submit" value="Delete Profile" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                {/* <div className="">
                     <hr />
-                    <div class="profile-card-6"><img src={this.state.profile_pic_url} class="img img-responsive" alt="Profile Pic" />
-                        <div class="profile-name">{this.state.first_name}
+                    <div className="profile-card-6"><img src={this.state.profile_pic_url} className="img img-responsive" alt="Profile Pic" />
+                        <div className="profile-name">{this.state.first_name}
                             <br />{this.state.last_name}
                             <br />{this.state.email}</div>
                     </div>
-                    <input accept="image/*" type='file' onChange={this.handleImageUpload} />
-                    <button onClick={e => { this.uploadImage(e) }}>Upload Image</button>
-                    <button onClick={e => { this.deleteImage(e) }}>Delete Image</button>
-                    <input className="btn btn-lg btn-success btn-block" type="submit" value="Edit Profile" />
-                </div>
+
+                </div> */}
 
 
 
