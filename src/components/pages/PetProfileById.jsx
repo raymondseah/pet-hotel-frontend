@@ -6,7 +6,9 @@ import jwt from 'jwt-decode'
 import './CreatePet.css'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
+import logo from '../../images/loading.gif'
 import './PetProfileById.css'
+import { Spring , animated } from 'react-spring/renderprops'
 
 class GetPetById extends React.Component {
 
@@ -14,7 +16,7 @@ class GetPetById extends React.Component {
         super(props)
         this.state = {
             //create state to help control the loading of image
-            pet_id:'',
+            pet_id: '',
             first_name: '',
             last_name: '',
             email: '',
@@ -22,7 +24,7 @@ class GetPetById extends React.Component {
             pet_name: '',
             pet_type: '',
             pet_breed: '',
-            pet_profile_url:'',
+            pet_profile_url: '',
             imageUrl: '',
             imageAlt: '',
             formMsg: [],
@@ -61,22 +63,22 @@ class GetPetById extends React.Component {
     getCurrentPetId(id) {
         console.log(id);
         axios
-          .get(`http://localhost:5000/api/v1/pets/${id}`)
-          .then((response) => {
-              console.log(response.data.result)
-            this.setState({
-                pet_id:response.data.result.id,
-                pet_name:response.data.result.pet_name,
-                pet_type:response.data.result.pet_type,
-                pet_breed:response.data.result.pet_breed,
+            .get(`http://localhost:5000/api/v1/pets/${id}`)
+            .then((response) => {
+                console.log(response.data.result)
+                this.setState({
+                    pet_id: response.data.result.id,
+                    pet_name: response.data.result.pet_name,
+                    pet_type: response.data.result.pet_type,
+                    pet_breed: response.data.result.pet_breed,
 
 
+                });
+
+            })
+            .catch((err) => {
+                console.log(err);
             });
-
-          })
-          .catch((err) => {
-            console.log(err);
-          });
 
     }
 
@@ -110,7 +112,7 @@ class GetPetById extends React.Component {
             pet_type: this.state.pet_type,
             pet_breed: this.state.pet_breed,
             client_id: this.state.client_id,
-            email:this.state.email
+            email: this.state.email
         }))
             .then(response => {
                 this.setState({
@@ -134,7 +136,7 @@ class GetPetById extends React.Component {
             pet_profile_url: this.state.imageUrl,
             user_id: this.state.client_id,
             email: this.state.email,
-            pet_id:this.state.pet_id
+            pet_id: this.state.pet_id
         }))
             .then(response => {
                 console.log("SENT")
@@ -186,11 +188,30 @@ class GetPetById extends React.Component {
             .catch((err) => console.log(err));
     };
 
+    handleDelete(e) {
+        e.preventDefault()
+        const routeParams = this.props.match.params;
+        const id = routeParams.id
+        axios
+            .delete(`http://localhost:5000/api/v1/pets/${id}`)
+            .then((response) => {
+                console.log(response)
+
+            })
+            // this.props.history.push('/users/allbookings')
+            .catch((err) => {
+                console.log(err);
+            });
+        this.props.history.push('/users/allpet')
+
+        window.location.reload(); 
+    }
+
 
     render() {
         return (
             <div id="pet-profile-page">
-                                <div class="container">
+                <div class="container">
                     <div class="main-body">
 
 
@@ -199,12 +220,15 @@ class GetPetById extends React.Component {
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex flex-column align-items-center text-center">
-                                            <img src={this.state.pet_profile_url} alt="profile-pic" class="rounded-circle" width="300" height="300" />
+                                            <img src={this.state.pet_profile_url} alt="profile-pic" className="profile-pic rounded-circle" width="300" height="300" />
+                                            <img src={logo} alt="loading-pic" className="loading-pic rounded-circle" width="300" height="300" />
                                             <input accept="image/*" type='file' onChange={this.handleImageUpload} />
                                             <button onClick={e => { this.uploadPetImage(e) }}>Upload Image</button>
+
                                             <button onClick={e => { this.deletePetImage(e) }}>Delete Image</button>
 
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +240,7 @@ class GetPetById extends React.Component {
                                                 <h6 class="mb-0">Pet Name :</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                            {this.state.pet_name}
+                                                {this.state.pet_name}
                                             </div>
                                         </div>
                                         <hr />
@@ -225,7 +249,7 @@ class GetPetById extends React.Component {
                                                 <h6 class="mb-0">Pet Type :</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                            {this.state.pet_type}
+                                                {this.state.pet_type}
                                             </div>
                                         </div>
                                         <hr />
@@ -234,12 +258,12 @@ class GetPetById extends React.Component {
                                                 <h6 class="mb-0">Breed :</h6>
                                             </div>
                                             <div class="col-sm-9 text-secondary">
-                                            {this.state.pet_breed}
+                                                {this.state.pet_breed}
                                             </div>
                                         </div>
                                     </div>
                                     <input className="btn btn-lg btn-success btn-block" type="submit" value="Edit Profile" />
-                                    <input className="btn btn-lg btn-success btn-danger" type="submit" value="Delete Profile" />
+                                    <input className="btn btn-lg btn-success btn-danger" type="submit" onClick={e => { this.handleDelete(e) }} value="Delete Profile" />
                                 </div>
 
                             </div>
@@ -247,7 +271,8 @@ class GetPetById extends React.Component {
                     </div>
                 </div>
 
-               
+
+
 
 
 

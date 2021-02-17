@@ -150,64 +150,68 @@ class CreateBooking extends Component {
     }
 
     handleArrivalDateChange(e) {
-        e.preventDefault()
+
         this.setState({
             arrival_date: e.target.value
-        })
-        let start = this.state.arrival_date
-        console.log(start)
-        this.calculateFee()
+        },
+        this.calculateFee
+        )
+
     }
 
     handleDepartureDateChange(e) {
-        e.preventDefault()
+
         this.setState({
             departure_date: e.target.value
-        })
-        console.log(this.state.departure_date)
-
-        this.calculateFee()
+        },
+        this.calculateFee
+        )
 
     }
 
+    calculateFee = () => {
 
-    calculateFee() {
-        // console.log(this.state.arrival_date)
-        // console.log(this.state.departure_date)
-        var start = moment(this.state.arrival_date);
-        console.log(start)
+        const totalUp = async () => {
+            var start = moment(this.state.arrival_date);
+            var end = moment(this.state.departure_date);
+            var diff = end.diff(start, 'days')
 
-        var end = moment(this.state.departure_date);
-
-        console.log(end)
-
-
-        if (this.state.arrival_date || this.state.departure_date !== '') {
-
-
-            console.log(true)
-
-            try {
-                var diff = end.diff(start, 'days')
-                console.log(diff)
-
-                var feeTotal = (diff * 20)
-
-                this.setState({
-                    duration: diff,
-                    fee: feeTotal
-                })
-
-            }
-            catch (err) {
-                console.log(err)
-
-            }
-
-
-        } else {
-            console.log(false)
+            var feeTotal = (diff * 20)
+            console.log(this.state.arrival_date)
+            this.setState({
+                duration: diff,
+                fee: feeTotal
+            })
         }
+        totalUp()
+
+
+
+
+        // if (this.state.arrival_date || this.state.departure_date !== '') {
+
+
+        //     try {
+        //         var diff = end.diff(start, 'days')
+        //         console.log(diff)
+
+        //         var feeTotal = (diff * 20)
+
+        //         this.setState({
+        //             duration: diff,
+        //             fee: feeTotal
+        //         })
+
+        //     }
+        //     catch (err) {
+        //         console.log(err)
+
+        //     }
+
+
+        // } else {
+        //     console.log(false)
+        // }
 
     }
 

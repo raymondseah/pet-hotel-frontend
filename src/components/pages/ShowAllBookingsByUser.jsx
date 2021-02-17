@@ -22,7 +22,7 @@ class ShowAllBookingsByUser extends Component {
             all_bookings: [],
             columns: [
 
-                { field: 'pet_name', headerName: 'pet_name', width: 200 },
+                { field: 'pet_name', headerName: 'Pet Name', width: 200 },
                 { field: 'arrival_date', headerName: 'Arrival Date', width: 400 },
                 { field: 'departure_date', headerName: 'Departure Date', width: 400 },
                 { field: 'status', headerName: 'Booking Status', width: 300 },
@@ -98,6 +98,7 @@ class ShowAllBookingsByUser extends Component {
 
     render() {
         return (
+            
             <div id="all-bookings-by-user-page" style={{ height: 900, width: '100%' }}>
                 <DataGrid rows={this.state.all_bookings} columns={this.state.columns} pageSize={5} checkboxSelection/>
                 

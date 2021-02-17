@@ -6,6 +6,7 @@ import jwt from 'jwt-decode'
 import './CreatePet.css'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
+import './CreatePet.css'
 class CreatePet extends React.Component {
 
     constructor(props) {
@@ -95,26 +96,24 @@ class CreatePet extends React.Component {
                 console.log(error)
             })
 
+            this.props.history.push('/users/allpet')
+
+            window.location.reload(); 
+
     }
     render() {
         return (
-            <div className="container">
-
+            <div id="create-pet-page">
                 <div className="container">
-                    <div className="d-flex justify-content-center h-100">
+                    <div className="d-flex justify-content-center ">
                         <div className="image_outer_container">
                             <div className="green_icon"></div>
                             <div className="image_inner_container">
-                                <img src="https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg" alt="Profile" />
+                                <img className="rounded-circle" src="https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg" alt="Profile" height="300" width="300" />
                             </div>
                         </div>
 
                     </div>
-
-                    <input accept="image/*" type='file' onChange={this.handleImageUpload} />
-                    <button onClick={e => { this.uploadImage(e) }}>Upload Image</button>
-                    <button onClick={e => { this.deleteImage(e) }}>Delete Image</button>
-                </div>
 
 
                 <form className="container" onSubmit={e => { this.handleFormSubmission(e) }}>
@@ -137,6 +136,8 @@ class CreatePet extends React.Component {
                     </div>
                     <button type="submit" className="btn btn-primary">Add Pet</button>
                 </form>
+
+                </div>
 
 
 

@@ -40,6 +40,18 @@ class GetBookingById extends React.Component {
         this.getCurrentUserId()
     }
 
+    handleChange(e, elemName) {
+        switch (elemName) {
+            case 'employee_notes':
+                this.setState({
+                    employee_notes: e.target.value
+                })
+                break;
+            default:
+        }
+    }
+
+
     getCurrentUserId() {
         const token = this.props.cookies.get('token')
         const config = {
@@ -141,7 +153,27 @@ class GetBookingById extends React.Component {
     }
 
 
+    employeNotesUpdate(e) {
+        e.preventDefault()
+        const routeParams = this.props.match.params;
+        const id = routeParams.id;
+        console.log(id)
+        axios.patch(`http://localhost:5000/api/v1/bookings/${id}/notes/update`, qs.stringify({
+            employee_notes: this.state.employee_notes
+        }))
+            .then(response => {
+                console.log(response)
 
+
+                console.log('ok')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+            window.location.reload(); 
+
+    }
 
     render() {
         return (
@@ -186,8 +218,8 @@ class GetBookingById extends React.Component {
                     <button type="delete" className="btn btn-danger" onClick={e => { this.handleDelete(e) }}>Delete</button>
                     <div className="row">
                         <div className="col-4">Employee Notes :</div>
-                        <textarea className="col-4" row="3" id="employee-notes" placeholder={this.state.client_notes}></textarea>
-                        <button className="col-4 btn btn-primary" onClick={e => { this.handleStatusChange(e) }}>Submit Employee Notes</button>
+                        <textarea className="col-4" row="3" id="employee-notes" placeholder={this.state.employee_notes} onChange={e => { this.handleChange(e, 'employee_notes') }} ></textarea>
+                        <button className="col-4 btn btn-primary" onClick={e => { this.employeNotesUpdate(e) }}>Submit Employee Notes</button>
                     </div>
                 </form>
             </div>

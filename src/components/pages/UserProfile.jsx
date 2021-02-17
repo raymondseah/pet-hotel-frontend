@@ -5,6 +5,7 @@ import qs from 'qs'
 import jwt from 'jwt-decode'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
+import logo from '../../images/loading.gif'
 import './UserProfile.css'
 class UserProfile extends React.Component {
     constructor(props) {
@@ -153,16 +154,17 @@ class UserProfile extends React.Component {
 
         return (
             <div id="page-userProfile">
-                <div class="container">
-                    <div class="main-body">
+                <div className="container">
+                    <div className="main-body">
 
 
-                        <div class="row gutters-sm">
-                            <div class="col-md-4 mb-3">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column align-items-center text-center">
-                                            <img src={this.state.profile_pic_url} alt="profile-pic" class="rounded-circle" width="300" height="300" />
+                        <div className="row gutters-sm">
+                            <div className="col-md-4 mb-3">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <div className="d-flex flex-column align-items-center text-center">
+                                            <img src={this.state.profile_pic_url} alt="profile-pic" className="rounded-circle" width="300" height="300" />
+                                            <img src={logo} alt="loading-pic" className="loading-pic rounded-circle" width="300" height="300" />
                                             <input accept="image/*" type='file' onChange={this.handleImageUpload} />
                                             <button onClick={e => { this.uploadImage(e) }}>Upload Image</button>
                                             <button onClick={e => { this.deleteImage(e) }}>Delete Image</button>
@@ -171,32 +173,32 @@ class UserProfile extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">First Name</h6>
+                            <div className="col-md-8">
+                                <div className="card mb-3">
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-sm-3">
+                                                <h6 className="mb-0">First Name</h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
+                                            <div className="col-sm-9 text-secondary">
                                                 {this.state.first_name}
                                             </div>
                                         </div>
                                         <hr />
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Last Name</h6>
+                                        <div className="row">
+                                            <div className="col-sm-3">
+                                                <h6 className="mb-0">Last Name</h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
+                                            <div className="col-sm-9 text-secondary">
                                                 {this.state.last_name}
                                             </div>
                                         </div>
                                         <hr />
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Email</h6>
+                                        <div className="row">
+                                            <div className="col-sm-3">
+                                                <h6 className="mb-0">Email</h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
+                                            <div className="col-sm-9 text-secondary">
                                                 {this.state.email}
                                             </div>
                                         </div>

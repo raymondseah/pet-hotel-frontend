@@ -7,8 +7,7 @@ class Home extends Component {
                 <div class="row container">
                     <div class="col-md-8 mb-5">
                         <h2>What We Do</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt neque tempore recusandae animi soluta quasi? Asperiores rem dolore eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat explicabo, maiores!</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis optio neque consectetur consequatur magni in nisi, natus beatae quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt voluptate. Voluptatum.</p>
+                        <p>we treat every pet like a baby because we know that is how much they mean to you. To us, your furbabies’ safety and comfort always come first. We make sure they are happy at our cosy home-like, family-oriented daycare, boarding and grooming.</p>
                         <a class="btn btn-primary btn-lg" href="/users/register">Sign Up Now &raquo;</a>
                     </div>
 
@@ -16,15 +15,14 @@ class Home extends Component {
                         <h2>Contact Us</h2>
                         <hr />
                         <address>
-                            <strong>Start Bootstrap</strong>
-                            <br />3481 Melrose Place
-                            <br />Beverly Hills, CA 90210
+                            <strong>Pawllywood</strong>
+                            <br />79 Anson Road, #20-01
                         </address>
                         <address>
                             <abbr title="Phone">Phone:</abbr>
-                            <br />(123) 456-7890
+                            <br />(65) 456-7890
                             <br /><abbr title="Email">Email:</abbr>
-                            <br /><a href="mailto:#">name@example.com</a>
+                            <br /><a href="mailto:#">Pawllywood@example.com</a>
                         </address>
                     </div>
                 </div>
