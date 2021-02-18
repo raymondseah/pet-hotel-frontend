@@ -103,7 +103,7 @@ class Login extends React.Component {
         return (
             <div id="page-login">
 
-                <div className="row container">
+                <div className="container" id="login-form">
                     <form onSubmit={e => { this.handleFormSubmission(e) }}>
                         <fieldset>
                             <h2>Already have an account? Please Login</h2>

@@ -121,7 +121,7 @@ class Login extends React.Component {
     render() {
         return (
             <div id="page-register" >
-                <div className="row container">
+                <div className="row container" id="register-form">
                     <div className="">
                         <form onSubmit={e => { this.handleFormSubmission(e) }}>
                             <h2>Please Sign Up <small>It's free and always will be.</small></h2>

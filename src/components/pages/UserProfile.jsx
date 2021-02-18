@@ -6,6 +6,10 @@ import jwt from 'jwt-decode'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
 import logo from '../../images/loading.gif'
+import EditIcon from '@material-ui/icons/Edit';
+import { Icon, IconButton } from '@material-ui/core'
+
+import DeleteIcon from '@material-ui/icons/Delete';
 import './UserProfile.css'
 class UserProfile extends React.Component {
     constructor(props) {
@@ -149,6 +153,16 @@ class UserProfile extends React.Component {
 
     }
 
+
+    confirmImageLoading() {
+        if (this.state.imageUrl !== '') {
+            return true
+        }
+
+        return false
+    }
+
+
     render() {
 
 
@@ -164,11 +178,19 @@ class UserProfile extends React.Component {
                                     <div className="card-body">
                                         <div className="d-flex flex-column align-items-center text-center">
                                             <img src={this.state.profile_pic_url} alt="profile-pic" className="rounded-circle" width="300" height="300" />
-                                            <img src={logo} alt="loading-pic" className="loading-pic rounded-circle" width="300" height="300" />
-                                            <input accept="image/*" type='file' onChange={this.handleImageUpload} />
-                                            <button onClick={e => { this.uploadImage(e) }}>Upload Image</button>
-                                            <button onClick={e => { this.deleteImage(e) }}>Delete Image</button>
 
+                                            {this.confirmImageLoading() ? (
+                                                <div>
+
+                                                    <button onClick={e => { this.uploadImage(e) }}>Upload Image</button>
+                                                </div>
+
+                                            ) : (
+                                                    <div>
+                                                        <input accept="image/*" type='file' onChange={this.handleImageUpload} />
+                                                        <button onClick={e => { this.deleteImage(e) }}>Delete Image</button>
+                                                    </div>
+                                                )}
                                         </div>
                                     </div>
                                 </div>
@@ -203,8 +225,24 @@ class UserProfile extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <input className="btn btn-lg btn-success btn-block" type="submit" value="Edit Profile" />
-                                    <input className="btn btn-lg btn-success btn-danger" type="submit" value="Delete Profile" />
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <button type="submit" className="btn edit">
+                                                <IconButton>
+                                                    <EditIcon style={{ fontSize: '20px' }} />
+                                                    Edit Pet Details
+                                            </IconButton>
+                                            </button>
+                                        </div>
+                                        <div className="col-6">
+                                            <button type="submit" className="btn" onClick={e => { this.handleDelete(e) }}>
+                                                <IconButton>
+                                                    <DeleteIcon style={{ fontSize: '20px' }} />
+                                                    Delete
+                                            </IconButton>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>

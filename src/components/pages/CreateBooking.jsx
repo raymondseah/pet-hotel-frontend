@@ -10,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import { Icon, IconButton } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add';
+
 import './CreateBooking.css'
 class CreateBooking extends Component {
 
@@ -154,7 +156,7 @@ class CreateBooking extends Component {
         this.setState({
             arrival_date: e.target.value
         },
-        this.calculateFee
+            this.calculateFee
         )
 
     }
@@ -164,7 +166,7 @@ class CreateBooking extends Component {
         this.setState({
             departure_date: e.target.value
         },
-        this.calculateFee
+            this.calculateFee
         )
 
     }
@@ -219,17 +221,16 @@ class CreateBooking extends Component {
     render() {
         return (
             <div className="create-booking">
-
-                <div className="row">
-                    <div className="container">
-                        <h2>Enter your booking details</h2>
-                    </div>
-                </div>
-
                 <form className="container" onSubmit={e => { this.handleFormSubmission(e) }}>
+                    <div className="row">
+                        <div className="">
+                            <h2>Enter your booking details</h2>
+                        </div>
+                    </div>
                     <div className="mb-3">
                         <label htmlFor="pet-name" className="form-label">Pet Name</label>
                         <Autocomplete
+                        className="selector"
                             id="pet-name"
                             options={this.state.pets_details}
                             getOptionLabel={(pets_details) => pets_details.pet_name}
@@ -242,16 +243,19 @@ class CreateBooking extends Component {
                     <div className="row">
                         <div className="col-xs-12 col-sm-6 col-md-5">
                             <div className="form-group">
+                                <label htmlFor="arrival_date" className="form-label">Arrival Date</label>
                                 <input type="datetime-local" name="arrival_date" id="arrival_date" value={this.state.arrival_date} onChange={e => { this.handleArrivalDateChange(e) }} className="form-control input-lg" />
                             </div>
                         </div>
                         <div className="col-xs-12 col-sm-6 col-md-5">
                             <div className="form-group">
+                                <label htmlFor="departure_date" className="form-label">Departure Date</label>
                                 <input type="datetime-local" name="departure_date" id="departure_date" value={this.state.departure_date} onChange={e => { this.handleDepartureDateChange(e) }} className="form-control input-lg" />
                             </div>
                         </div>
                         <div className="col-xs-12 col-sm-6 col-md-2">
                             <div className="form-group">
+                            <label htmlFor="fee" className="form-label">Calculated Fee</label>
                                 <input type="text" name="fee" id="fee" defaultValue={this.state.fee} className="form-control input-lg" />
                             </div>
                         </div>
@@ -259,11 +263,17 @@ class CreateBooking extends Component {
 
 
 
-                    <div className="mb-3">
+                    <div className="mb-3 client-notes">
                         <label htmlFor="client_notes" className="form-label">Client Notes</label>
                         <textarea type="text" value={this.state.client_notes} onChange={e => { this.handleChange(e, 'client_notes') }} className="form-control" id="client_notes" rows="3"></textarea>
                     </div>
-                    <button type="submit" className="btn btn-primary">Submit Booking</button>
+
+                    <button type="submit" className="btn">
+                        <IconButton>
+                            <AddIcon style={{ fontSize: '20px' }} />
+                        Submit Booking
+                        </IconButton>
+                    </button>
                 </form>
 
             </div>

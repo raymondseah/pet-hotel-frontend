@@ -20,9 +20,9 @@ class ShowAllPetByUser extends Component {
             all_pets: [],
             columns: [
 
-                { field: 'pet_name', headerName: 'pet_name', width: 200 },
-                { field: 'pet_type', headerName: 'pet_type', width: 200 },
-                { field: 'pet_breed', headerName: 'pet_breed', width: 200 },
+                { field: 'pet_name', headerName: 'Pet Name', width: 200 },
+                { field: 'pet_type', headerName: 'Pet Type', width: 200 },
+                { field: 'pet_breed', headerName: 'Pet Breed', width: 200 },
                 {
                     field: 'id', headerName: "View", width: 200,
                     renderCell: (params) => (

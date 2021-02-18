@@ -7,8 +7,12 @@ import './CreatePet.css'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
 import logo from '../../images/loading.gif'
+import EditIcon from '@material-ui/icons/Edit';
+import { Icon, IconButton } from '@material-ui/core'
+
+import DeleteIcon from '@material-ui/icons/Delete';
 import './PetProfileById.css'
-import { Spring , animated } from 'react-spring/renderprops'
+import { Spring, animated } from 'react-spring/renderprops'
 
 class GetPetById extends React.Component {
 
@@ -204,66 +208,100 @@ class GetPetById extends React.Component {
             });
         this.props.history.push('/users/allpet')
 
-        window.location.reload(); 
+        window.location.reload();
     }
+
+    confirmImageLoading() {
+        if (this.state.imageUrl !== '') {
+            return true
+        }
+
+        return false
+    }
+
 
 
     render() {
         return (
             <div id="pet-profile-page">
-                <div class="container">
-                    <div class="main-body">
-
-
-                        <div class="row gutters-sm">
-                            <div class="col-md-4 mb-3">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column align-items-center text-center">
+                <div className="container">
+                    <div className="main-body">
+                        <div className="row gutters-sm">
+                            <div className="col-md-4 mb-3">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <div className="d-flex flex-column align-items-center text-center">
                                             <img src={this.state.pet_profile_url} alt="profile-pic" className="profile-pic rounded-circle" width="300" height="300" />
-                                            <img src={logo} alt="loading-pic" className="loading-pic rounded-circle" width="300" height="300" />
-                                            <input accept="image/*" type='file' onChange={this.handleImageUpload} />
-                                            <button onClick={e => { this.uploadPetImage(e) }}>Upload Image</button>
 
-                                            <button onClick={e => { this.deletePetImage(e) }}>Delete Image</button>
+
+
+                                            {this.confirmImageLoading() ? (
+                                                <div>
+
+                                                    <button onClick={e => { this.uploadPetImage(e) }}>Upload Image</button>
+                                                </div>
+
+                                            ) : (
+                                                    <div>
+                                                        <input accept="image/*" type='file' onChange={this.handleImageUpload} />
+                                                        <button onClick={e => { this.deletePetImage(e) }}>Delete Image</button>
+                                                    </div>
+                                                )}
+
 
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Pet Name :</h6>
+                            <div className="col-md-8">
+                                <div className="card mb-3">
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-sm-3">
+                                                <h6 className="mb-0">Pet Name :</h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
+                                            <div className="col-sm-9 text-secondary">
                                                 {this.state.pet_name}
                                             </div>
                                         </div>
                                         <hr />
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Pet Type :</h6>
+                                        <div className="row">
+                                            <div className="col-sm-3">
+                                                <h6 className="mb-0">Pet Type :</h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
+                                            <div className="col-sm-9 text-secondary">
                                                 {this.state.pet_type}
                                             </div>
                                         </div>
                                         <hr />
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Breed :</h6>
+                                        <div className="row">
+                                            <div className="col-sm-3">
+                                                <h6 className="mb-0">Breed :</h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
+                                            <div className="col-sm-9 text-secondary">
                                                 {this.state.pet_breed}
                                             </div>
                                         </div>
                                     </div>
-                                    <input className="btn btn-lg btn-success btn-block" type="submit" value="Edit Profile" />
-                                    <input className="btn btn-lg btn-success btn-danger" type="submit" onClick={e => { this.handleDelete(e) }} value="Delete Profile" />
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <button type="submit" className="btn edit">
+                                                <IconButton>
+                                                    <EditIcon style={{ fontSize: '20px' }} />
+                                                    Edit Pet Details
+                                            </IconButton>
+                                            </button>
+                                        </div>
+                                        <div className="col-6">
+                                            <button type="submit" className="btn">
+                                                <IconButton>
+                                                    <DeleteIcon style={{ fontSize: '20px' }} />
+                                                    Delete
+                                            </IconButton>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>

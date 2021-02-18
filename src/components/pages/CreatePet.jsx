@@ -6,6 +6,8 @@ import jwt from 'jwt-decode'
 import './CreatePet.css'
 import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
+import { Icon, IconButton } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add';
 import './CreatePet.css'
 class CreatePet extends React.Component {
 
@@ -19,7 +21,7 @@ class CreatePet extends React.Component {
             pet_name: '',
             pet_type: '',
             pet_breed: '',
-            pet_profile_url:'',
+            pet_profile_url: '',
             formMsg: [],
         }
     }
@@ -83,7 +85,7 @@ class CreatePet extends React.Component {
             pet_type: this.state.pet_type,
             pet_breed: this.state.pet_breed,
             client_id: this.state.client_id,
-            email:this.state.email
+            email: this.state.email
         }))
             .then(response => {
                 this.setState({
@@ -96,15 +98,15 @@ class CreatePet extends React.Component {
                 console.log(error)
             })
 
-            this.props.history.push('/users/allpet')
+        this.props.history.push('/users/allpet')
 
-            window.location.reload(); 
+        window.location.reload();
 
     }
     render() {
         return (
             <div id="create-pet-page">
-                <div className="container">
+                <div className="container" id="pet-create-form">
                     <div className="d-flex justify-content-center ">
                         <div className="image_outer_container">
                             <div className="green_icon"></div>
@@ -112,30 +114,32 @@ class CreatePet extends React.Component {
                                 <img className="rounded-circle" src="https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg" alt="Profile" height="300" width="300" />
                             </div>
                         </div>
-
                     </div>
-
-
-                <form className="container" onSubmit={e => { this.handleFormSubmission(e) }}>
-                    <div className="mb-3">
-                        <label htmlFor="pet-name" className="form-label">Pet Name</label>
-                        <input type="text" value={this.state.pet_name} onChange={e => { this.handleChange(e, 'pet_name') }} className="form-control" id="pet-name" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="pet-type" className="form-label">Pet Type</label>
-                        <select value={this.state.pet_type} onChange={e => { this.handleChange(e, 'pet_type') }} className="form-control" id="pet-type">
-                            <option>---PLEASE SELECT---</option>
-                            <option>Dog</option>
-                            <option>Cat</option>
-                            <option>Birds</option>
-                        </select>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="pet-breed" className="form-label">Pet Breed</label>
-                        <input type="text" value={this.state.pet_breed} onChange={e => { this.handleChange(e, 'pet_breed') }} className="form-control" id="pet-breed" />
-                    </div>
-                    <button type="submit" className="btn btn-primary">Add Pet</button>
-                </form>
+                    <form className="" onSubmit={e => { this.handleFormSubmission(e) }}>
+                        <div className="mb-3">
+                            <label htmlFor="pet-name" className="form-label">Pet Name</label>
+                            <input type="text" value={this.state.pet_name} onChange={e => { this.handleChange(e, 'pet_name') }} className="form-control" id="pet-name" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="pet-type" className="form-label">Pet Type</label>
+                            <select value={this.state.pet_type} onChange={e => { this.handleChange(e, 'pet_type') }} className="form-control" id="pet-type">
+                                <option>---PLEASE SELECT---</option>
+                                <option>Dog</option>
+                                <option>Cat</option>
+                                <option>Birds</option>
+                            </select>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="pet-breed" className="form-label">Pet Breed</label>
+                            <input type="text" value={this.state.pet_breed} onChange={e => { this.handleChange(e, 'pet_breed') }} className="form-control" id="pet-breed" />
+                        </div>
+                        <button type="submit" className="btn">
+                            <IconButton>
+                                <AddIcon style={{ fontSize: '20px' }} />
+                                    Add Pet
+                        </IconButton>
+                        </button>
+                    </form>
 
                 </div>
 

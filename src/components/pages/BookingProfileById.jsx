@@ -8,6 +8,10 @@ import { withCookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import UpdateIcon from '@material-ui/icons/Update';
+import { Icon, IconButton } from '@material-ui/core'
+
+import DeleteIcon from '@material-ui/icons/Delete';
 import './BookingProfileById.css'
 class GetBookingById extends React.Component {
 
@@ -29,7 +33,8 @@ class GetBookingById extends React.Component {
             next_status: '',
             fee: '',
             formMsg: [],
-            status_choices: ["awaiting confirmation", "awaiting arrival", "arrived", "departed", "booking cancelled"]
+            status_choices: ["awaiting confirmation", "awaiting arrival", "arrived", "departed", "booking cancelled"],
+            pet_profile_url: '',
         }
     }
 
@@ -38,6 +43,7 @@ class GetBookingById extends React.Component {
         console.log(routeParams)
         this.getCurrentBookingId(routeParams.id)
         this.getCurrentUserId()
+
     }
 
     handleChange(e, elemName) {
@@ -51,6 +57,24 @@ class GetBookingById extends React.Component {
         }
     }
 
+
+    getPetImageById() {
+        const id = this.state.pet_id
+        return axios
+            .get(`http://localhost:5000/api/v1/pet/${id}/profileimage`)
+            .then((response) => {
+                console.log(response)
+                this.setState({
+                    pet_profile_url: response.data.profile_pic_url,
+                })
+            })
+            .catch((err) => {
+                console.log(err);
+                this.setState({
+                    pet_profile_url: 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg',
+                })
+            });
+    }
 
     getCurrentUserId() {
         const token = this.props.cookies.get('token')
@@ -82,7 +106,7 @@ class GetBookingById extends React.Component {
                 console.log(response.data.result)
                 console.log(response.data.result.client_notes)
                 this.setState({
-                    pet_id: response.data.result.id,
+                    pet_id: response.data.result.pet_id,
                     pet_name: response.data.result.pet_name,
                     arrival_date: response.data.result.arrival_date,
                     departure_date: response.data.result.departure_date,
@@ -90,7 +114,9 @@ class GetBookingById extends React.Component {
                     fee: response.data.result.fee,
                     status: response.data.result.status,
                     employee_notes: response.data.result.employee_notes
-                });
+                },
+                    this.getPetImageById
+                );
 
             })
             .catch((err) => {
@@ -138,7 +164,7 @@ class GetBookingById extends React.Component {
                 console.log(err)
             })
 
-            window.location.reload(); 
+        window.location.reload();
 
     }
 
@@ -171,7 +197,7 @@ class GetBookingById extends React.Component {
                 console.log(err)
             })
 
-            window.location.reload(); 
+        window.location.reload();
 
     }
 
@@ -181,46 +207,122 @@ class GetBookingById extends React.Component {
 
 
                 <form className="container">
-                    <div className="row">
-                        <div className="col-4">Pet Name : </div>
-                        <div className="col-8" id="pet-name" >{this.state.pet_name}</div>
+                    <div className="row gutters-sm">
+                        <div className="col-md-4 mb-3">
+                            <div className="card">
+                                <div className="card-body">
+                                    <div className="d-flex flex-column align-items-center text-center">
+                                        <img src={this.state.pet_profile_url} alt="profile-pic" className="profile-pic rounded-circle" width="300" height="300" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-8">
+                            <div className="card mb-3">
+                                <div className="card-body">
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <h6 className="mb-0">Pet Name:</h6>
+                                        </div>
+                                        <div className="col-sm-9 text-secondary">
+                                            {this.state.pet_name}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <h6 className="mb-0">Arrival Date & Time:</h6>
+                                        </div>
+                                        <div className="col-sm-9 text-secondary">
+                                            {this.state.arrival_date}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <h6 className="mb-0">Departure Date & Time:</h6>
+                                        </div>
+                                        <div className="col-sm-9 text-secondary">
+                                            {this.state.departure_date}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <h6 className="mb-0">Client Notes:</h6>
+                                        </div>
+                                        <div className="col-sm-9 text-secondary">
+                                            {this.state.client_notes}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <h6 className="mb-0">Fees:</h6>
+                                        </div>
+                                        <div className="col-sm-9 text-secondary">
+                                            {this.state.fee}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <h6 className="mb-0">Booking Status:</h6>
+                                        </div>
+                                        <div className="col-sm-3 text-secondary">
+                                            {this.state.status}
+                                        </div>
+                                        <div className="col-sm-3 text-secondary">
+                                            <Autocomplete
+                                                id="pet-name"
+                                                options={this.state.status_choices}
+                                                getOptionLabel={(status_choices) => status_choices}
+                                                onChange={this.onStatusChange}
+                                                renderInput={(params) => <TextField {...params} label="update booking status" variant="outlined" />}
+                                            />
+                                        </div>
+                                        <button className="col-3 btn" onClick={e => { this.handleStatusChange(e) }}>
+                                            <IconButton>
+                                                <UpdateIcon style={{ fontSize: '30px' }} />
+                                                <h6> Update status</h6>
+                                            </IconButton>
+                                        </button>
+                                    </div>
+                                    <hr />
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <h6 className="mb-0">Employee Notes:</h6>
+                                        </div>
+                                        <div className="col-sm-9 text-secondary">
+                                            {this.state.employee_notes}
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-sm-10">
+                                            <textarea className="col-10" row="4" id="employee-notes" placeholder={this.state.employee_notes} onChange={e => { this.handleChange(e, 'employee_notes') }} ></textarea>
+                                        </div>
+                                        <div className="col-sm-2">
+                                            <button className="col-2 btn" onClick={e => { this.employeNotesUpdate(e) }}>
+                                                <IconButton>
+                                                    <UpdateIcon style={{ fontSize: '30px' }} />
+                                                    <h6> Update status</h6>
+                                                </IconButton></button>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-sm-12">
+                                            <button className="col-2 btn" onClick={e => { this.handleDelete(e) }}>
+                                                <IconButton>
+                                                    <DeleteIcon style={{ fontSize: '30px' }} />
+                                                    <h6> Delete Bookings</h6>
+                                                </IconButton></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="row">
-                        <div className="col-4">Arrival Date & Time : </div>
-                        <div className="col-8" id="arrival-date" >{this.state.arrival_date}</div>
-                    </div>
-                    <div className="row">
-                        <div className="col-4">Departure Date & Time : </div>
-                        <div className="col-8" id="departure-date" >{this.state.departure_date}</div>
-                    </div>
-                    <div className="row">
-                        <div className="col-4">Client Notes :</div>
-                        <textarea className="col-8" row="3" id="client-notes" placeholder={this.state.client_notes}></textarea>
-                    </div>
-                    <div className="row">
-                        <div className="col-3">Booking Status :</div>
-                        <div className="col-3">{this.state.status}</div>
-                        <div className="col-3">
-                            <Autocomplete
-                                id="pet-name"
-                                options={this.state.status_choices}
-                                getOptionLabel={(status_choices) => status_choices}
-                                onChange={this.onStatusChange}
-                                renderInput={(params) => <TextField {...params} label="update booking status" variant="outlined" />}
-                            /></div>
-                        <button className="col-3 btn btn-primary" onClick={e => { this.handleStatusChange(e) }}>Update Status</button>
-                    </div>
-                    <div className="row">
-                        <div className="col-4">Fees :</div>
-                        <div className="col-8" id="fee" >{this.state.fee}</div>
-                    </div>
-                    <a type="edit" className="btn btn-primary" href="/">Edit</a>
-                    <button type="delete" className="btn btn-danger" onClick={e => { this.handleDelete(e) }}>Delete</button>
-                    <div className="row">
-                        <div className="col-4">Employee Notes :</div>
-                        <textarea className="col-4" row="3" id="employee-notes" placeholder={this.state.employee_notes} onChange={e => { this.handleChange(e, 'employee_notes') }} ></textarea>
-                        <button className="col-4 btn btn-primary" onClick={e => { this.employeNotesUpdate(e) }}>Submit Employee Notes</button>
-                    </div>
+
                 </form>
             </div>
         )
