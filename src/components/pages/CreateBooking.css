@@ -1,0 +1,13 @@
+.create-booking {
+    height:85vh;
+    background-color: lightgrey;
+}
+
+.selector{
+    background-color: white;
+    border-style: none;
+}
+
+.client-notes {
+    padding-top: 50px;
+}

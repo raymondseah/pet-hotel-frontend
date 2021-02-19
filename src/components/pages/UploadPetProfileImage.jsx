@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
 
-function createPetPage() {
+function UploadPetProfileImage() {
   
   const [imageSelected, setImageSelected] = useState(""); 
   const [imgURL, setImageURL] = useState('')
@@ -33,4 +33,4 @@ function createPetPage() {
   );
 }
 
-export default createPetPage;
+export default UploadPetProfileImage;

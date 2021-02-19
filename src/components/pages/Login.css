@@ -1,0 +1,14 @@
+#page-login{
+    height:85vh;
+    width:100vw;
+    background-color: lightgrey;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#login-form {
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 50px;
+
+}

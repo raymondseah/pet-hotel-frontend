@@ -68,3 +68,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+`to do for project 4`
+
+`moment for period`
+`client user dashboard`
+`admin dashboard, admin user, filters and search`
+`email for notifications when photo upload` 
+`history of bookings, maybe 1 more model` 
