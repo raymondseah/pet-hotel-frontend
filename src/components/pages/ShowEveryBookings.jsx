@@ -52,7 +52,7 @@ class ShowEveryBookings extends Component {
             }
         }
         return axios
-            .get('http://localhost:5000/api/v1/users/profile', config)
+            .get('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/profile', config)
             .then((response) => {
                 this.setState({
                     first_name: response.data.first_name,
