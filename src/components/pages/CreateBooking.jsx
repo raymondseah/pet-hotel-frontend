@@ -45,7 +45,7 @@ class CreateBooking extends Component {
             }
         }
         return axios
-            .get('http://localhost:5000/api/v1/users/profile', config)
+            .get('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/profile', config)
             .then((response) => {
                 this.setState({
                     user_email: response.data.email,
@@ -67,7 +67,7 @@ class CreateBooking extends Component {
             }
         }
         return axios
-            .get('http://localhost:5000/api/vi/allpet', config)
+            .get('https://pawllywood-hotel-server.herokuapp.com/api/vi/allpet', config)
             .then((response) => {
                 console.log(response)
                 this.setState({
@@ -112,7 +112,7 @@ class CreateBooking extends Component {
         e.preventDefault() // prevent submit to another page
 
 
-        axios.post('http://localhost:5000/api/v1/bookings/create', qs.stringify({
+        axios.post('https://pawllywood-hotel-server.herokuapp.com/api/v1/bookings/create', qs.stringify({
             user_email: this.state.user_email,
             user_id: this.state.user_id,
             pet_id: this.state.pet_id,

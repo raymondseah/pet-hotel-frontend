@@ -5,6 +5,11 @@
 
 .container {
     height:85vh;
+
+}
+#home {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .mb-5 {

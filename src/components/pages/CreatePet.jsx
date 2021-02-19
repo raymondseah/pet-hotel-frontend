@@ -38,7 +38,7 @@ class CreatePet extends React.Component {
             }
         }
         return axios
-            .get('http://localhost:5000/api/v1/users/profile', config)
+            .get('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/profile', config)
             .then((response) => {
                 this.setState({
                     first_name: response.data.first_name,
@@ -80,7 +80,7 @@ class CreatePet extends React.Component {
             formMsg: []
         })
 
-        axios.post('http://localhost:5000/api/v1/pets/create', qs.stringify({
+        axios.post('https://pawllywood-hotel-server.herokuapp.com/api/v1/pets/create', qs.stringify({
             pet_name: this.state.pet_name,
             pet_type: this.state.pet_type,
             pet_breed: this.state.pet_breed,

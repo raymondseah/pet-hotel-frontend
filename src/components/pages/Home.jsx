@@ -4,7 +4,7 @@ class Home extends Component {
     render() {
         return (
             <div className="home-page">
-                <div class="row container">
+                <div className="row container" id="home">
                     <div class="col-md-8 mb-5">
                         <h2>What We Do</h2>
                         <p>we treat every pet like a baby because we know that is how much they mean to you. To us, your furbabies’ safety and comfort always come first. We make sure they are happy at our cosy home-like, family-oriented daycare, boarding and grooming.</p>

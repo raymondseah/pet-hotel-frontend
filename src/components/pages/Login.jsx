@@ -46,7 +46,7 @@ class Login extends React.Component {
         if (formValid) {
 
             // make api call to login
-            axios.post('http://localhost:5000/api/v1/users/login', qs.stringify({
+            axios.post('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/login', qs.stringify({
                 email: this.state.email,
                 password: this.state.password,
             }))

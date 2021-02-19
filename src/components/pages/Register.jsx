@@ -70,7 +70,7 @@ class Login extends React.Component {
             }
 
             // make api call to register
-            axios.post('http://localhost:5000/api/v1/users/register', qs.stringify(userObject))
+            axios.post('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/register', qs.stringify(userObject))
                 .then(response => {
 
                     console.log(response.data)

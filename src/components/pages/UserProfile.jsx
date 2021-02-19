@@ -39,7 +39,7 @@ class UserProfile extends React.Component {
             }
         }
         return axios
-            .get('http://localhost:5000/api/v1/users/profile', config)
+            .get('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/profile', config)
             .then((response) => {
                 this.setState({
                     first_name: response.data.first_name,
@@ -62,7 +62,7 @@ class UserProfile extends React.Component {
             }
         }
         return axios
-            .get('http://localhost:5000/api/v1/users/profileimage', config)
+            .get('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/profileimage', config)
             .then((response) => {
                 console.log(response)
                 this.setState({
@@ -103,7 +103,7 @@ class UserProfile extends React.Component {
                 auth_token: token
             }
         }
-        axios.post('http://localhost:5000/api/v1/users/profile/upload', qs.stringify({
+        axios.post('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/profile/upload', qs.stringify({
             imageUrl: this.state.imageUrl,
             user_id: this.state.user_id,
             email: this.state.email,
@@ -134,7 +134,7 @@ class UserProfile extends React.Component {
             }
         }
 
-        axios.delete('http://localhost:5000/api/v1/users/profileimagedelete', config)
+        axios.delete('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/profileimagedelete', config)
             .then((response) => {
                 console.log(response);
                 this.props.history.push('/')
