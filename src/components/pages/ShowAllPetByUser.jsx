@@ -53,7 +53,7 @@ class ShowAllPetByUser extends Component {
             }
         }
         return axios
-            .get('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/profile', config)
+            .get('http://localhost:5000/api/v1/users/profile', config)
             .then((response) => {
                 this.setState({
                     first_name: response.data.first_name,
@@ -80,7 +80,7 @@ class ShowAllPetByUser extends Component {
             }
         }
         return axios
-            .get('https://pawllywood-hotel-server.herokuapp.com/api/vi/allpet', config)
+            .get('http://localhost:5000/api/vi/allpet', config)
             .then((response) => {
                 console.log(response)
                 this.setState({

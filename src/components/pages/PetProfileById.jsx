@@ -50,7 +50,7 @@ class GetPetById extends React.Component {
             }
         }
         return axios
-            .get('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/profile', config)
+            .get('http://localhost:5000/api/v1/users/profile', config)
             .then((response) => {
                 this.setState({
                     first_name: response.data.first_name,
@@ -67,7 +67,7 @@ class GetPetById extends React.Component {
     getCurrentPetId(id) {
         console.log(id);
         axios
-            .get(`https://pawllywood-hotel-server.herokuapp.com/api/v1/pets/${id}`)
+            .get(`http://localhost:5000/api/v1/pets/${id}`)
             .then((response) => {
                 console.log(response.data.result)
                 this.setState({
@@ -89,7 +89,7 @@ class GetPetById extends React.Component {
     getPetImageById(id) {
 
         return axios
-            .get(`https://pawllywood-hotel-server.herokuapp.com/api/v1/pet/${id}/profileimage`)
+            .get(`http://localhost:5000/api/v1/pet/${id}/profileimage`)
             .then((response) => {
                 console.log(response)
                 this.setState({
@@ -111,7 +111,7 @@ class GetPetById extends React.Component {
             formMsg: []
         })
 
-        axios.post('https://pawllywood-hotel-server.herokuapp.com/api/v1/pets/create', qs.stringify({
+        axios.post('http://localhost:5000/api/v1/pets/create', qs.stringify({
             pet_name: this.state.pet_name,
             pet_type: this.state.pet_type,
             pet_breed: this.state.pet_breed,
@@ -136,7 +136,7 @@ class GetPetById extends React.Component {
         const routeParams = this.props.match.params
         const id = routeParams.id
 
-        axios.post(`https://pawllywood-hotel-server.herokuapp.com/api/v1/pet/${id}/profile/upload`, qs.stringify({
+        axios.post(`http://localhost:5000/api/v1/pet/${id}/profile/upload`, qs.stringify({
             pet_profile_url: this.state.imageUrl,
             user_id: this.state.client_id,
             email: this.state.email,
@@ -164,7 +164,7 @@ class GetPetById extends React.Component {
         const routeParams = this.props.match.params
         const id = routeParams.id
 
-        axios.delete(`https://pawllywood-hotel-server.herokuapp.com/api/v1/pet/${id}/profile/delete`)
+        axios.delete(`http://localhost:5000/api/v1/pet/${id}/profile/delete`)
             .then((response) => {
                 console.log(response);
                 this.props.history.push('/')
@@ -197,7 +197,7 @@ class GetPetById extends React.Component {
         const routeParams = this.props.match.params;
         const id = routeParams.id
         axios
-            .delete(`https://pawllywood-hotel-server.herokuapp.com/api/v1/pets/${id}`)
+            .delete(`http://localhost:5000/api/v1/pets/${id}`)
             .then((response) => {
                 console.log(response)
 

@@ -61,7 +61,7 @@ class GetBookingById extends React.Component {
     getPetImageById() {
         const id = this.state.pet_id
         return axios
-            .get(`https://pawllywood-hotel-server.herokuapp.com/api/v1/pet/${id}/profileimage`)
+            .get(`http://localhost:5000/api/v1/pet/${id}/profileimage`)
             .then((response) => {
                 console.log(response)
                 this.setState({
@@ -84,7 +84,7 @@ class GetBookingById extends React.Component {
             }
         }
         return axios
-            .get('https://pawllywood-hotel-server.herokuapp.com/api/v1/users/profile', config)
+            .get('http://localhost:5000/api/v1/users/profile', config)
             .then((response) => {
                 this.setState({
                     first_name: response.data.first_name,
@@ -101,7 +101,7 @@ class GetBookingById extends React.Component {
     getCurrentBookingId(id) {
         console.log(id);
         axios
-            .get(`https://pawllywood-hotel-server.herokuapp.com/api/v1/bookings/${id}`)
+            .get(`http://localhost:5000/api/v1/bookings/${id}`)
             .then((response) => {
                 console.log(response.data.result)
                 console.log(response.data.result.client_notes)
@@ -130,7 +130,7 @@ class GetBookingById extends React.Component {
         const routeParams = this.props.match.params;
         const id = routeParams.id
         axios
-            .delete(`https://pawllywood-hotel-server.herokuapp.com/api/v1/bookings/${id}`)
+            .delete(`http://localhost:5000/api/v1/bookings/${id}`)
             .then((response) => {
                 console.log(response)
                 this.props.history.push('/users/allbookings')
@@ -151,7 +151,7 @@ class GetBookingById extends React.Component {
         const routeParams = this.props.match.params;
         const id = routeParams.id;
         console.log(id)
-        axios.patch(`https://pawllywood-hotel-server.herokuapp.com/api/v1/bookings/${id}/update`, qs.stringify({
+        axios.patch(`http://localhost:5000/api/v1/bookings/${id}/update`, qs.stringify({
             next_status: this.state.next_status
         }))
             .then(response => {
@@ -184,7 +184,7 @@ class GetBookingById extends React.Component {
         const routeParams = this.props.match.params;
         const id = routeParams.id;
         console.log(id)
-        axios.patch(`https://pawllywood-hotel-server.herokuapp.com/api/v1/bookings/${id}/notes/update`, qs.stringify({
+        axios.patch(`http://localhost:5000/api/v1/bookings/${id}/notes/update`, qs.stringify({
             employee_notes: this.state.employee_notes
         }))
             .then(response => {

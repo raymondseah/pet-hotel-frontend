@@ -73,7 +73,7 @@ class ShowEveryBookings extends Component {
     getEveryBookings() {
 
         return axios
-            .get('https://pawllywood-hotel-server.herokuapp.com/api/v1/admin/getallbookings')
+            .get('http://localhost:5000/api/v1/admin/getallbookings')
             .then((response) => {
                 console.log(response)
                 this.setState({
